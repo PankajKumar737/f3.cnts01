@@ -1,37 +1,34 @@
-let red = document.getElementById("red");
-let green = document.getElementById("green");
-let btn = document.getElementById("btn");
+var nameInput = document.getElementById("name");
+var professionInput = document.getElementById("profession");
+var ageInput = document.getElementById("age");
 
-let name = document.getElementById("name").value;
-let profesion = document.getElementById("profession").value;
-let age = document.getElementById("age").value;
+var button = document.getElementById("adduser");
 
-btn.addEventListener("click",  function(){
-    if(name=="" || profesion=="" || age=="" ){
-        red.style.display = "none";
-        green.style.display = "block";
-    }
-    else{
-        red.style.display = "block";
-        green.style.display = "none"; 
-    }
+button.addEventListener("click", () => {
+  var name = nameInput.value;
+  var profession = professionInput.value;
+  var age = ageInput.value;
+
+  if (name == "" || profession == "" || age == "") {
+    document.querySelector(".status-msg").style.display = "block";
+    document.querySelector(".status-msg").style.color = "red";
+  } else {
+    document.querySelector(".emp-li-container").innerHTML += `
+        <div class="emp-card" id="id-${name}-${profession}-${age}">
+            <div class="details">
+                <span>Name: ${name}</span>
+                <span>Profession: ${profession}</span>
+                <span>Age: ${age}</span> 
+            </div>
+            <button id="del-user-btn" onclick="deleteUser('id-${name}-${profession}-${age}')">Delete User</button>
+        </div>
+    `;
+  }
 });
 
-
-btn.addEventListener("click", (event) => {
-    // standard code to prevent your page from reloading
-    event.preventDefault();
-    addTask(name, profesion, age);
-    //modal.style.display = "none";
-  });
-  
-  
-  function addTask(name, profesion, age) {
-    let tasks = [name, profesion, age];
-    let li = document.createElement('li');
-    tasks.forEach(function (curr) {
-      let p = document.createElement('p');
-      p.textContent = curr;
-      li.appendChild(p);
-    
-    })};
+function deleteUser(id) {
+  var userToDel = document.getElementById(id);
+  console.log(userToDel);
+  document.querySelector(".emp-li-container").removeChild(userToDel);
+  alert("User deleted");
+}
